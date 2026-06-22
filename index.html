@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ExpenseIQ – Expense Tracker Dashboard</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <div class="logo">💰 ExpenseIQ</div>
+    <div class="header-meta">
+      <span id="monthLabel" class="month-label"></span>
+      <button class="btn-add" onclick="openModal()">+ Add Expense</button>
+    </div>
+  </div>
+</header>
+
+<!-- MODAL -->
+<div id="modal" class="modal-overlay hidden">
+  <div class="modal-card">
+    <h2 class="modal-title">Add Expense</h2>
+    <label class="field-label">Description</label>
+    <input type="text" id="expDesc" placeholder="e.g. Lunch, Rent, Netflix..." class="field-input"/>
+    <label class="field-label">Amount (₹)</label>
+    <input type="number" id="expAmount" placeholder="0.00" class="field-input" min="0" step="0.01"/>
+    <label class="field-label">Category</label>
+    <select id="expCat" class="field-input">
+      <option value="Food">🍔 Food</option>
+      <option value="Transport">🚌 Transport</option>
+      <option value="Shopping">🛍 Shopping</option>
+      <option value="Health">🏥 Health</option>
+      <option value="Entertainment">🎬 Entertainment</option>
+      <option value="Education">📚 Education</option>
+      <option value="Utilities">💡 Utilities</option>
+      <option value="Other">📦 Other</option>
+    </select>
+    <label class="field-label">Date</label>
+    <input type="date" id="expDate" class="field-input"/>
+    <div class="modal-btns">
+      <button class="btn-ghost" onclick="closeModal()">Cancel</button>
+      <button class="btn-primary" onclick="addExpense()">Save</button>
+    </div>
+  </div>
+</div>
+
+<main class="main">
+  <!-- STAT CARDS -->
+  <section class="stats-row">
+    <div class="stat-card accent-green">
+      <div class="stat-icon">💵</div>
+      <div class="stat-body">
+        <div class="stat-label">Total Budget</div>
+        <div class="stat-value" id="statBudget">₹0</div>
+        <input type="number" id="budgetInput" placeholder="Set budget..." class="budget-input" onchange="setBudget()"/>
+      </div>
+    </div>
+    <div class="stat-card accent-red">
+      <div class="stat-icon">📤</div>
+      <div class="stat-body">
+        <div class="stat-label">Total Spent</div>
+        <div class="stat-value" id="statSpent">₹0</div>
+      </div>
+    </div>
+    <div class="stat-card accent-blue">
+      <div class="stat-icon">💎</div>
+      <div class="stat-body">
+        <div class="stat-label">Remaining</div>
+        <div class="stat-value" id="statRemaining">₹0</div>
+      </div>
+    </div>
+    <div class="stat-card accent-purple">
+      <div class="stat-icon">📊</div>
+      <div class="stat-body">
+        <div class="stat-label">Transactions</div>
+        <div class="stat-value" id="statCount">0</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BUDGET BAR -->
+  <section class="budget-bar-section">
+    <div class="section-title">Budget Usage</div>
+    <div class="progress-bar-track">
+      <div class="progress-bar-fill" id="progressBar"></div>
+    </div>
+    <div class="progress-labels">
+      <span id="progressPct">0% used</span>
+      <span id="progressNote"></span>
+    </div>
+  </section>
+
+  <!-- CHARTS + TABLE -->
+  <section class="bottom-grid">
+    <!-- Category Chart -->
+    <div class="chart-panel">
+      <div class="section-title">Spending by Category</div>
+      <canvas id="catChart" width="300" height="300"></canvas>
+      <div id="catLegend" class="cat-legend"></div>
+    </div>
+
+    <!-- Transactions -->
+    <div class="table-panel">
+      <div class="table-header">
+        <div class="section-title">Transactions</div>
+        <select id="filterCat" class="filter-select" onchange="renderTable()">
+          <option value="All">All Categories</option>
+          <option value="Food">Food</option>
+          <option value="Transport">Transport</option>
+          <option value="Shopping">Shopping</option>
+          <option value="Health">Health</option>
+          <option value="Entertainment">Entertainment</option>
+          <option value="Education">Education</option>
+          <option value="Utilities">Utilities</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+      <div id="expenseTable" class="expense-table"></div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  CodTech IT Solutions · CITS4855 · DARA.SUMAN · Full Stack Web Development
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
